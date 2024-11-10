@@ -1,9 +1,8 @@
 import React from 'react';
 
 const DateSlider = ({ currentDate, nextDate, prevDate }) => {
-    
-    if (!currentDate) {
-        return <p>Loading date...</p>;
+    if (!currentDate || !nextDate || !prevDate) {
+        return <p>dodo</p>;
     }
 
     return (

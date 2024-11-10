@@ -67,6 +67,7 @@ const PrayerTimesContainer = () => {
 
     // Get current date based on currentIndex
     const currentDate = dates[currentIndex];
+   
 
     return (
         <div className="flex flex-col items-center">
