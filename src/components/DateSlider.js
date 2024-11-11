@@ -1,8 +1,13 @@
-import React from 'react';
+// DateSlider.js
+import React, { useContext } from 'react';
+import { DateContext } from '../context/DateContext';
 
-const DateSlider = ({ currentDate, nextDate, prevDate }) => {
-    if (!currentDate || !nextDate || !prevDate) {
-        return <p>dodo</p>;
+const DateSlider = () => {
+    const { dates, currentIndex, nextDate, prevDate } = useContext(DateContext);
+    const currentDate = dates[currentIndex];
+
+    if (!currentDate) {
+        return <p>Loading...</p>;
     }
 
     return (
@@ -27,5 +32,4 @@ const DateSlider = ({ currentDate, nextDate, prevDate }) => {
         </div>
     );
 };
-
 export default DateSlider;
