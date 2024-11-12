@@ -6,8 +6,12 @@ Clonez le dépôt :
 
 ### bash
 Copy code
+
 git clone https://github.com/AliElmissaoui/app-adan/tree/main
+
+
 cd app-adhan
+
 ### Installez les dépendances :
 
 npm install
