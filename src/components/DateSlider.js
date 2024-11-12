@@ -1,7 +1,6 @@
 
 import React, { useContext } from 'react';
 import { DateContext } from '../context/DateContext';
-
 const DateSlider = () => {
     const { dates, currentIndex, nextDate, prevDate } = useContext(DateContext);
     const currentDate = dates[currentIndex];
@@ -9,7 +8,6 @@ const DateSlider = () => {
     if (!currentDate) {
         return <p>Loading...</p>;
     }
-
     return (
         <div className="flex  items-center justify-center space-x-4 mt-2">
             <button

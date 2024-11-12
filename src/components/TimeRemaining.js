@@ -6,13 +6,11 @@ const TimeRemaining = () => {
     const { dates, currentIndex } = useContext(DateContext);
     const [nextPrayer, setNextPrayer] = useState({ name: 'Loading...', time: null });
     const [timeRemaining, setTimeRemaining] = useState('');
-
     useEffect(() => {
         if (dates.length > 0) {
             findNextPrayer(dates[currentIndex].timings);
         }
     }, [dates, currentIndex]);
-
     const findNextPrayer = (timings) => {
         const currentTime = new Date();
         const prayerTimes = Object.entries(timings).map(([name, time]) => {
@@ -23,11 +21,9 @@ const TimeRemaining = () => {
             prayerDate.setSeconds(0);
             return { name, time: prayerDate };
         });
-
         const next = prayerTimes.find(({ time }) => time > currentTime) || prayerTimes[0];
         setNextPrayer(next);
     };
-
     useEffect(() => {
         const interval = setInterval(() => {
             if (nextPrayer.time) {
@@ -54,7 +50,6 @@ const TimeRemaining = () => {
 
         return () => clearInterval(interval);
     }, [nextPrayer, dates, currentIndex]);
-
     return (
         <div className='w-full flex justify-center items-center  relative z-20 -top-20'>
             <div
@@ -74,5 +69,4 @@ const TimeRemaining = () => {
         </div>
     );
 };
-
 export default TimeRemaining;

@@ -6,12 +6,10 @@ import { PiCloudSunFill } from "react-icons/pi";
 import { TbSunElectricity } from "react-icons/tb";
 import { RxSun } from "react-icons/rx";
 import { BsSunrise } from "react-icons/bs";
-
 const PrayerTimes = () => {
     const { dates, currentIndex } = useContext(DateContext);
     const currentDate = dates[currentIndex];
     const [nextPrayer, setNextPrayer] = useState(null);
-
     useEffect(() => {
         const updateNextPrayer = () => {
             if (currentDate) {
