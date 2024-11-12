@@ -1,6 +1,8 @@
-
 import React, { createContext, useState, useEffect } from 'react';
+import { fetchPrayerTimes, fetchCityName } from '../api/apiService';
+
 export const DateContext = createContext();
+
 export const DateProvider = ({ children }) => {
     const [dates, setDates] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -24,25 +26,20 @@ export const DateProvider = ({ children }) => {
                     navigator.geolocation.getCurrentPosition(async (position) => {
                         const latitude = position.coords.latitude;
                         const longitude = position.coords.longitude;
-                        const nominatimApiUrl = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`;
-                        
+                        const date = new Date();
+                        const month = date.getMonth() + 1;
+                        const year = date.getFullYear();
+
                         try {
-                            const cityResponse = await fetch(nominatimApiUrl);
-                            const cityData = await cityResponse.json();
-                            const city = cityData.address?.city || cityData.address?.town || cityData.address?.village || 'Unknown Location';
+                            // Fetch city name
+                            const city = await fetchCityName(latitude, longitude);
                             setCityName(city);
 
-                            const date = new Date();
-                            const month = date.getMonth() + 1;
-                            const year = date.getFullYear();
-                            const apiUrl = `http://api.aladhan.com/v1/calendar?latitude=${latitude}&longitude=${longitude}&method=21&month=${month}&year=${year}`;
+                            // Fetch prayer times
+                            const prayerData = await fetchPrayerTimes(latitude, longitude, month, year);
 
-                            const response = await fetch(apiUrl);
-                            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                            const data = await response.json();
-
-                            if (data.code === 200 && data.data) {
-                                const fetchedDates = data.data.map(day => ({
+                            if (prayerData.code === 200 && prayerData.data) {
+                                const fetchedDates = prayerData.data.map(day => ({
                                     arabic: day.date.hijri.date,
                                     french: day.date.gregorian.date,
                                     day: day.date.gregorian.weekday.en,
@@ -55,6 +52,7 @@ export const DateProvider = ({ children }) => {
                                         Isha: day.timings.Isha.split(" ")[0],
                                     },
                                 }));
+
                                 setDates(fetchedDates);
                                 localStorage.setItem('prayerTimesData', JSON.stringify({ dates: fetchedDates, cityName: city }));
                                 localStorage.setItem('prayerTimesTimestamp', now.toString());
