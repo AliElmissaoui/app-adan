@@ -16,8 +16,9 @@ export const DateProvider = ({ children }) => {
             const storedTime = localStorage.getItem('prayerTimesTimestamp');
             const twentyFourHours = 24 * 60 * 60 * 1000; 
             const now = new Date().getTime();
+            const fiveMinutes = 5 * 60 * 1000;
 
-            if (storedData && storedTime && now - storedTime < twentyFourHours) {
+            if (storedData && storedTime && now - storedTime < fiveMinutes) {
                 setDates(storedData.dates);
                 setCityName(storedData.cityName);
                 setLoading(false);
@@ -39,10 +40,11 @@ export const DateProvider = ({ children }) => {
                             const prayerData = await fetchPrayerTimes(latitude, longitude, month, year);
 
                             if (prayerData.code === 200 && prayerData.data) {
+                               
                                 const fetchedDates = prayerData.data.map(day => ({
                                     arabic: day.date.hijri.date,
                                     french: day.date.gregorian.date,
-                                    day: day.date.gregorian.weekday.en,
+                                    day: day.date.gregorian.day,
                                     timings: {
                                         Fajr: day.timings.Fajr.split(" ")[0],
                                         Sunrise: day.timings.Sunrise.split(" ")[0],
@@ -51,8 +53,9 @@ export const DateProvider = ({ children }) => {
                                         Maghrib: day.timings.Maghrib.split(" ")[0],
                                         Isha: day.timings.Isha.split(" ")[0],
                                     },
+                                  
                                 }));
-
+                                console.log(fetchedDates)
                                 setDates(fetchedDates);
                                 localStorage.setItem('prayerTimesData', JSON.stringify({ dates: fetchedDates, cityName: city }));
                                 localStorage.setItem('prayerTimesTimestamp', now.toString());
