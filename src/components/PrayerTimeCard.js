@@ -8,9 +8,10 @@ import TimeRemaining from './TimeRemaining';
 
 const PrayerTimeCard = () => {
     return (
-        <div className="w-full max-w-sm bg-gray-50 rounded-lg shadow-lg p-4 mx-auto">
-            <Header />
+        <div className="w-full max-w-sm bg-gray-50 rounded-lg shadow-lg  mx-auto">
+            
             <DateProvider>
+            <Header />
             <TimeRemaining />
             <AdSection />
             <PrayerTimesContainer/>

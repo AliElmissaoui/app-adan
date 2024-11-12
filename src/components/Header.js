@@ -1,18 +1,16 @@
 // src/components/Header.js
-import React from 'react';
-
+import React ,{ useContext } from 'react';
+import { DateContext } from '../context/DateContext';
 const Header = () => {
+    const { cityName } = useContext(DateContext);
     return (
-        <div
-            
-           className="bg-[#1c4587] w-full flex flex-col justify-center items-start p-6 text-center mb-6"
-
-        >
-            <h1 className="text-2xl font-semibold text-gray-800 text-left">Prière</h1>
-            <p className="text-sm text-gray-500 text-left">
-                L'heure de prière <span className="text-orange-500 font-medium">Casablanca</span>
-            </p>
-        </div>
+        <div className="bg-black flex flex-col h-40">
+         
+        <h1 className="text-3xl font-semibold text-white ml-4">Prière</h1>
+        <p className="text-sm text-white  ml-4 ">
+            L'heure de prière <span className="text-orange-500 font-medium ">{ cityName }</span>
+        </p>
+    </div>
     );
 };
 
