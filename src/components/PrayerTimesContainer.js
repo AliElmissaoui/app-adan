@@ -1,10 +1,10 @@
 // src/components/PrayerTimesContainer.js
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PrayerTimes from './PrayerTimes';
 
 const PrayerTimesContainer = () => {
     return (
-        <div className="flex flex-col items-center">
+        <div className="justify-items-center">
             <PrayerTimes />
         </div>
     );

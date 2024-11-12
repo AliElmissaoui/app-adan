@@ -8,6 +8,7 @@ export const DateProvider = ({ children }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [cityName, setCityName] = useState('');
 
     useEffect(() => {
         const fetchDates = async () => {
@@ -15,7 +16,14 @@ export const DateProvider = ({ children }) => {
                 navigator.geolocation.getCurrentPosition(async (position) => {
                     const latitude = position.coords.latitude;
                     const longitude = position.coords.longitude;
-
+                    const nominatimApiUrl = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`;
+                    try {
+                        const cityResponse = await fetch(nominatimApiUrl);
+                        const cityData = await cityResponse.json();
+                        setCityName(cityData.address?.city || cityData.address?.town || cityData.address?.village || 'Unknown Location');
+                    } catch (err) {
+                        console.error("Failed to fetch city name:", err);
+                    }
                     const date = new Date();
                     const month = date.getMonth() + 1;
                     const year = date.getFullYear();
@@ -32,11 +40,12 @@ export const DateProvider = ({ children }) => {
                                 french: day.date.gregorian.date,
                                 day: day.date.gregorian.weekday.en,
                                 timings: {
-                                    Fajr: day.timings.Fajr,
-                                    Dhuhr: day.timings.Dhuhr,
-                                    Asr: day.timings.Asr,
-                                    Maghrib: day.timings.Maghrib,
-                                    Isha: day.timings.Isha,
+                                    Fajr: day.timings.Fajr.split(" ")[0],    // Extract only "HH:MM"
+                                    Sunrise: day.timings.Sunrise.split(" ")[0],
+                                    Dhuhr: day.timings.Dhuhr.split(" ")[0],
+                                    Asr: day.timings.Asr.split(" ")[0],
+                                    Maghrib: day.timings.Maghrib.split(" ")[0],
+                                    Isha: day.timings.Isha.split(" ")[0],
                                 },
                             }));
                             setDates(fetchedDates);
@@ -62,7 +71,7 @@ export const DateProvider = ({ children }) => {
     const prevDate = () => setCurrentIndex((currentIndex - 1 + dates.length) % dates.length);
 
     return (
-        <DateContext.Provider value={{ dates, currentIndex, nextDate, prevDate, loading, error }}>
+        <DateContext.Provider value={{ dates, currentIndex, nextDate, prevDate, loading, error ,cityName }}>
             {children}
         </DateContext.Provider>
     );
