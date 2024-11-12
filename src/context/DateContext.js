@@ -43,7 +43,7 @@ export const DateProvider = ({ children }) => {
                                     french: day.date.gregorian.date,
                                     timings: {
                                         Fajr: day.timings.Fajr.split(" ")[0],
-                                        Sunrise: day.timings.Sunrise.split(" ")[0],
+                                        Chourouq: day.timings.Sunrise.split(" ")[0],
                                         Dhuhr: day.timings.Dhuhr.split(" ")[0],
                                         Asr: day.timings.Asr.split(" ")[0],
                                         Maghrib: day.timings.Maghrib.split(" ")[0],

@@ -36,7 +36,7 @@ const PrayerTimes = () => {
 
     const icons = {
         Fajr: <WiHorizonAlt size={30} className="text-orange-500" />,  
-        Sunrise: <WiSunrise size={30} className="text-orange-500" />, 
+        Chourouq: <WiSunrise size={30} className="text-orange-500" />, 
         Dhuhr: <WiDaySunny size={30} className="text-yellow-500" />, 
         Asr: <WiDayCloudy size={30} className="text-yellow-500" />,   
         Maghrib: <WiSunset size={30} className="text-orange-500" />, 
