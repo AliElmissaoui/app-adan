@@ -1,11 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { DateContext } from '../context/DateContext';
-import { SunIcon } from '@heroicons/react/solid';
-import { SiSunrise  } from "react-icons/si";
-import { PiCloudSunFill } from "react-icons/pi";
-import { TbSunElectricity } from "react-icons/tb";
-import { RxSun } from "react-icons/rx";
-import { BsSunrise } from "react-icons/bs";
+import { WiSunrise, WiHorizonAlt, WiDaySunny, WiDayCloudy, WiSunset, WiNightClear } from "react-icons/wi";
 const PrayerTimes = () => {
     const { dates, currentIndex } = useContext(DateContext);
     const currentDate = dates[currentIndex];
@@ -40,13 +35,13 @@ const PrayerTimes = () => {
     }
 
     const icons = {
-        Fajr: <BsSunrise   className="w-5 h-5 text-orange-500 " />,
-        Sunrise: <SiSunrise className="w-5 h-5 text-orange-500 " />, 
-        Dhuhr: <RxSun className="w-5 h-5 text-yellow-500 " />,
-        Asr: <SunIcon className="w-5 h-5 text-yellow-500 " />,
-        Maghrib: <PiCloudSunFill className="w-5 h-5 text-orange-500 " />,
-        Isha: <TbSunElectricity  className="w-5 h-5 text-orange-500 " />,
-    };
+        Fajr: <WiHorizonAlt size={30} className="text-orange-500" />,  
+        Sunrise: <WiSunrise size={30} className="text-orange-500" />, 
+        Dhuhr: <WiDaySunny size={30} className="text-yellow-500" />, 
+        Asr: <WiDayCloudy size={30} className="text-yellow-500" />,   
+        Maghrib: <WiSunset size={30} className="text-orange-500" />, 
+        Isha: <WiNightClear size={30} className="text-orange-500" />,  
+      };
 
     return (
         <div className="grid  grid-cols-3 gap-4 text-center bg-slate-100 p-4 w-11/12  mb-6">

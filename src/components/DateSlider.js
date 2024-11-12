@@ -17,7 +17,6 @@ const DateSlider = () => {
                 &lt;
             </button>
             <div className="text-center">
-                <p className="text-xs font-bold text-gray-950">{currentDate.day}</p>
                 <p className="text-xs font-bold text-gray-950">{currentDate.arabic}</p>
                 <p className="text-xs text-gray-950">{currentDate.french}</p>
                

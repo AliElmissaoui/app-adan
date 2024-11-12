@@ -14,14 +14,14 @@ export const DateProvider = ({ children }) => {
         const fetchDates = async () => {
             const storedData = JSON.parse(localStorage.getItem('prayerTimesData'));
             const storedTime = localStorage.getItem('prayerTimesTimestamp');
-            const twentyFourHours = 24 * 60 * 60 * 1000; 
             const now = new Date().getTime();
-            const fiveMinutes = 5 * 60 * 1000;
+            const twentyFourHours = 24 * 60 * 60 * 1000;
 
-            if (storedData && storedTime && now - storedTime < fiveMinutes) {
+            if (storedData && storedTime && now - storedTime < twentyFourHours) {
                 setDates(storedData.dates);
                 setCityName(storedData.cityName);
                 setLoading(false);
+                setTodayIndex(storedData.dates);  
             } else {
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(async (position) => {
@@ -32,19 +32,15 @@ export const DateProvider = ({ children }) => {
                         const year = date.getFullYear();
 
                         try {
-                            // Fetch city name
                             const city = await fetchCityName(latitude, longitude);
                             setCityName(city);
 
-                            // Fetch prayer times
                             const prayerData = await fetchPrayerTimes(latitude, longitude, month, year);
 
                             if (prayerData.code === 200 && prayerData.data) {
-                               
                                 const fetchedDates = prayerData.data.map(day => ({
                                     arabic: day.date.hijri.date,
                                     french: day.date.gregorian.date,
-                                    day: day.date.gregorian.day,
                                     timings: {
                                         Fajr: day.timings.Fajr.split(" ")[0],
                                         Sunrise: day.timings.Sunrise.split(" ")[0],
@@ -53,10 +49,9 @@ export const DateProvider = ({ children }) => {
                                         Maghrib: day.timings.Maghrib.split(" ")[0],
                                         Isha: day.timings.Isha.split(" ")[0],
                                     },
-                                  
                                 }));
-                                console.log(fetchedDates)
                                 setDates(fetchedDates);
+                                setTodayIndex(fetchedDates); 
                                 localStorage.setItem('prayerTimesData', JSON.stringify({ dates: fetchedDates, cityName: city }));
                                 localStorage.setItem('prayerTimesTimestamp', now.toString());
                             } else {
@@ -72,6 +67,18 @@ export const DateProvider = ({ children }) => {
                     setError("Geolocation not supported.");
                     setLoading(false);
                 }
+            }
+        };
+
+        const setTodayIndex = (datesArray) => {
+            const today = new Date();
+            const formattedToday = today.toLocaleDateString('fr-CA');
+            const [year, month, day] = formattedToday.split('-');
+            const todayFormatted = `${day}-${month}-${year}`;
+
+            const todayIndex = datesArray.findIndex(date => date.french === todayFormatted);
+            if (todayIndex !== -1) {
+                setCurrentIndex(todayIndex);
             }
         };
 
