@@ -7,7 +7,7 @@ Clonez le dépôt :
 ### bash
 Copy code
 
-git clone https://github.com/AliElmissaoui/app-adan/tree/main
+git clone https://github.com/AliElmissaoui/app-adhan/tree/main
 
 
 cd app-adhan
