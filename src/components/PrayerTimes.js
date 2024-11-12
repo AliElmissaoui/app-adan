@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { DateContext } from '../context/DateContext';
-import { SunIcon, MoonIcon } from '@heroicons/react/solid';
+import { SunIcon } from '@heroicons/react/solid';
 import { SiSunrise  } from "react-icons/si";
 import { PiCloudSunFill } from "react-icons/pi";
 import { TbSunElectricity } from "react-icons/tb";
@@ -27,14 +27,14 @@ const PrayerTimes = () => {
                     return prayerTime > currentTime;
                 });
 
-                setNextPrayer(upcomingPrayer ? upcomingPrayer[0] : timings[0][0]); // If no future prayer, fallback to first prayer
+                setNextPrayer(upcomingPrayer ? upcomingPrayer[0] : timings[0][0]); 
             }
         };
 
-        updateNextPrayer(); // Initial call to set next prayer
-        const interval = setInterval(updateNextPrayer, 60000); // Check every minute
+        updateNextPrayer(); 
+        const interval = setInterval(updateNextPrayer, 60000); 
 
-        return () => clearInterval(interval); // Cleanup interval on unmount
+        return () => clearInterval(interval); 
     }, [currentDate]);
 
     if (!currentDate) {
@@ -51,11 +51,11 @@ const PrayerTimes = () => {
     };
 
     return (
-        <div className="grid grid-cols-3 gap-4 text-center bg-slate-100 p-4 w-11/12  mb-6">
+        <div className="grid  grid-cols-3 gap-4 text-center bg-slate-100 p-4 w-11/12  mb-6">
   {Object.entries(currentDate.timings).map(([name, time]) => (
     <div
       key={name}
-      className={`p-2 rounded-lg ${name === nextPrayer ? 'border-2  border-orange-600 bg-white ' : 'bg-white border-zinc-300'}`}
+      className={`p-2 rounded-lg bg-white  ${name === nextPrayer ? 'border-2  border-orange-600  ' : 'border-zinc-300'}`}
     >
       <div className="flex justify-center items-center w-12  h-12 bg-slate-700 rounded-full mx-auto">
         {icons[name]}

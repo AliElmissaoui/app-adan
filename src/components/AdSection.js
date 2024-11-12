@@ -1,4 +1,4 @@
-// src/components/AdSection.js
+
 import React from 'react';
 
 

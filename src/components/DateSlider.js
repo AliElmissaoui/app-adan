@@ -1,4 +1,4 @@
-// DateSlider.js
+
 import React, { useContext } from 'react';
 import { DateContext } from '../context/DateContext';
 

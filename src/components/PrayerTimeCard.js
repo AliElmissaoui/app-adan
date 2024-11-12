@@ -1,8 +1,8 @@
-// src/components/PrayerTimeCard.js
+
 import React from 'react';
 import Header from './Header';
 import AdSection from './AdSection';
-import PrayerTimesContainer from './PrayerTimesContainer';
+import PrayerTimes from './PrayerTimes';
 import { DateProvider } from '../context/DateContext';
 import TimeRemaining from './TimeRemaining';
 
@@ -14,7 +14,9 @@ const PrayerTimeCard = () => {
             <Header />
             <TimeRemaining />
             <AdSection />
-            <PrayerTimesContainer/>
+            <div className="justify-items-center">
+            <PrayerTimes />
+            </div>
             </DateProvider>
            
         </div>
